@@ -15,7 +15,7 @@ public class FinanceManager {
     double total = 0;
 
     for (Transaction t : transactions) {
-      if (t.getType().equals("income")) {
+      if (t.getType().equalsIgnoreCase("income")) {
         total += t.getAmount();
       }
     }
@@ -26,7 +26,7 @@ public class FinanceManager {
     double total = 0;
 
     for (Transaction t : transactions) {
-      if (t.getType().equals("expense")) {
+      if (t.getType().equalsIgnoreCase("expense")) {
         total += t.getAmount();
       }
     }

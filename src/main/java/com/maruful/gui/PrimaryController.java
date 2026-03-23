@@ -5,10 +5,15 @@ import com.maruful.data.DataHandler;
 import com.maruful.manager.FinanceManager;
 import com.maruful.model.Transaction;
 import com.maruful.recommendation.Recommendation;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.beans.property.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
 public class PrimaryController {
@@ -64,6 +69,21 @@ public class PrimaryController {
   private TableColumn<Transaction, String> descriptionCol;
 
   @FXML
+  private Label savingsRatioLabel;
+
+  @FXML
+  private Label expenseRatioLabel;
+
+  @FXML
+  private TableColumn<Transaction, Void> actionCol;
+
+  @FXML
+  private PieChart expenseChart;
+
+  @FXML
+  private BarChart<String, Number> barChart;
+
+  @FXML
   public void initialize() {
     typeBox.getItems().addAll("Income", "Expense");
 
@@ -78,7 +98,7 @@ public class PrimaryController {
     );
     amountCol.setCellValueFactory(cellData ->
       new SimpleObjectProperty<>(cellData.getValue().getAmount())
-      );
+    );
     descriptionCol.setCellValueFactory(cellData ->
       new SimpleStringProperty(cellData.getValue().getDescription())
     );
@@ -88,6 +108,40 @@ public class PrimaryController {
     } catch (Exception e) {
       System.out.println("No previous data");
     }
+
+    actionCol.setCellFactory(col ->
+      new TableCell<>() {
+        private final Button deleteButton = new Button("X");
+
+        {
+          deleteButton.setOnAction(event -> {
+            Transaction t = getTableView().getItems().get(getIndex());
+
+            manager.getTransactions().remove(t);
+
+            try {
+              DataHandler.save(manager.getTransactions());
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+
+            updateUI();
+          });
+        }
+
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+          super.updateItem(item, empty);
+
+          if (empty) {
+            setGraphic(null);
+          } else {
+            setGraphic(deleteButton);
+          }
+        }
+      }
+    );
+
     updateUI();
   }
 
@@ -133,17 +187,61 @@ public class PrimaryController {
 
     int score = calculator.calculateScore(income, expense);
     String advice = recommend.generateRecommendation(income, expense, score);
+    double savingsRatio = engine.calculateSavingsRatio(income, expense);
+    double expenseRatio = engine.calculateExpenseRatio(income, expense);
 
     incomeLabel.setText("Income: " + income);
     expenseLabel.setText("Expense: " + expense);
     balanceLabel.setText("Balance: " + manager.getBalance());
     scoreLabel.setText("Score: " + score);
     recommendationLabel.setText("Recommendation: " + advice);
+    savingsRatioLabel.setText(
+      String.format("Savings Ratio: %.2f%%", savingsRatio)
+    );
+    expenseRatioLabel.setText(
+      String.format("Expense Ratio: %.2f%%", expenseRatio)
+    );
 
     tableView.getItems().clear();
     tableView.getItems().addAll(manager.getTransactions());
     tableView.refresh();
 
     System.out.println("Transactions: " + manager.getTransactions().size());
+
+    // chart
+    expenseChart.getData().clear();
+
+    Map<String, Double> categoryMap = new HashMap<>();
+
+    for (Transaction t : manager.getTransactions()) {
+      if (t.getType().equalsIgnoreCase("expense")) {
+        categoryMap.put(
+          t.getCategory(),
+          categoryMap.getOrDefault(t.getCategory(), 0.0) + t.getAmount()
+        );
+      }
+    }
+    if (!categoryMap.isEmpty()) {
+      for (String category : categoryMap.keySet()) {
+        expenseChart
+          .getData()
+          .add(new PieChart.Data(category, categoryMap.get(category)));
+      }
+    }
+
+    barChart.getData().clear();
+
+    XYChart.Series<String, Number> series = new XYChart.Series<>();
+    series.setName("Overview");
+    series.getData().add(new XYChart.Data<>("Income", income));
+    series.getData().add(new XYChart.Data<>("Expense", expense));
+    barChart.getData().add(series);
+
+    expenseChart.setAnimated(true);
+    barChart.setAnimated(true);
+    expenseChart.layout();
+    barChart.layout();
+
+    tableView.refresh();
   }
 }

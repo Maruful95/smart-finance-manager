@@ -1,6 +1,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
 
 <VBox spacing="15" alignment="CENTER"
       xmlns:fx="http://javafx.com/fxml"
@@ -27,6 +28,8 @@
     <Label fx:id="balanceLabel" text="Balance: 0"/>
     <Label fx:id="scoreLabel" text="Score: 0"/>
     <Label fx:id="recommendationLabel" text="Recommendation: -"/>
+    <Label fx:id="savingsRatioLabel" text="Savings Ratio: 0"/>
+    <Label fx:id="expenseRatioLabel" text="Expense Ratio: 0"/>
 
     <!-- Table -->
     <TableView fx:id="tableView" >
@@ -37,8 +40,25 @@
             <TableColumn fx:id="typeCol" text="Type"/>
             <TableColumn fx:id="amountCol" text="Amount"/>
             <TableColumn fx:id="descriptionCol" text="Description"/>
+            <TableColumn fx:id="actionCol" text="Action"/>
         </columns>
 
     </TableView>
+
+    <!-- chart -->
+    <VBox spacing="20" alignment="CENTER">
+        <Label text="Expense Distribution"/>
+        <PieChart fx:id="expenseChart" prefHeight="300" prefWidth="400"/>
+
+        <Label text="Income vs Expense"/>
+        <BarChart fx:id="barChart" prefHeight="300" prefWidth="500">
+            <xAxis>
+                <CategoryAxis label="Type"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Amount"/>
+            </yAxis>
+        </BarChart>
+    </VBox>
 
 </VBox>
