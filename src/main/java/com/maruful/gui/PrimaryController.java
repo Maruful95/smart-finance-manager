@@ -7,7 +7,6 @@ import com.maruful.model.Transaction;
 import com.maruful.recommendation.Recommendation;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.beans.property.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -164,12 +163,25 @@ public class PrimaryController {
         return;
       }
 
-      double amount = Double.parseDouble(amountText);
+      double amount;
+      try {
+        amount = Double.parseDouble(amountText);
+      } catch (NumberFormatException e) {
+        System.out.println("Invalid amount! Please enter a valid number.");
+        return;
+      }
+
       Transaction t = new Transaction(type, category, amount, date, desc);
       manager.addTransaction(t);
 
       System.out.println("Saving transaction...");
       DataHandler.save(manager.getTransactions());
+
+      typeBox.setValue(null);
+      categoryField.clear();
+      amountField.clear();
+      dateField.clear();
+      descField.clear();
 
       updateUI();
     } catch (Exception e) {

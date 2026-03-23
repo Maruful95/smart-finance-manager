@@ -11,54 +11,91 @@
 
     <!-- Input Form -->
     <HBox spacing="10" alignment="CENTER">
-
         <ComboBox fx:id="typeBox" promptText="Type"/>
         <TextField fx:id="categoryField" promptText="Category"/>
         <TextField fx:id="amountField" promptText="Amount"/>
         <TextField fx:id="dateField" promptText="Date"/>
         <TextField fx:id="descField" promptText="Description"/>
-
         <Button text="Add" onAction="#handleAddTransaction"/>
-
     </HBox>
 
     <!-- Dashboard -->
-    <Label fx:id="incomeLabel" text="Income: 0"/>
-    <Label fx:id="expenseLabel" text="Expense: 0"/>
-    <Label fx:id="balanceLabel" text="Balance: 0"/>
-    <Label fx:id="scoreLabel" text="Score: 0"/>
-    <Label fx:id="recommendationLabel" text="Recommendation: -"/>
-    <Label fx:id="savingsRatioLabel" text="Savings Ratio: 0"/>
-    <Label fx:id="expenseRatioLabel" text="Expense Ratio: 0"/>
+    <HBox spacing="20" alignment="CENTER">
+        <VBox style="-fx-background-color:#2ecc71; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Income" style="-fx-text-fill:white;"/>
+            <Label fx:id="incomeLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        </VBox>
 
+        <VBox style="-fx-background-color:#e74c3c; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Expense" style="-fx-text-fill:white;"/>
+            <Label fx:id="expenseLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        </VBox>
+
+        <VBox style="-fx-background-color:#3498db; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Balance" style="-fx-text-fill:white;"/>
+            <Label fx:id="balanceLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        </VBox>
+
+        <VBox style="-fx-background-color:#9b59b6; -fx-padding:15; -fx-background-radius:10;">
+            <Label text="Score" style="-fx-text-fill:white;"/>
+            <Label fx:id="scoreLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        </VBox>
+    </HBox>
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Recommendation" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+
+        <Label fx:id="recommendationLabel"
+               wrapText="true"
+               maxWidth="400"
+               style="-fx-background-color:#f1f2f6; -fx-padding:10; -fx-background-radius:8;"/>
+    </VBox>
+    <HBox spacing="30" alignment="CENTER">
+        <VBox style="-fx-background-color:#f39c12; -fx-padding:10; -fx-background-radius:8;">
+            <Label text="Savings Ratio" style="-fx-text-fill:white;"/>
+            <Label fx:id="savingsRatioLabel" style="-fx-text-fill:white; -fx-font-size:14;"/>
+        </VBox>
+
+        <VBox style="-fx-background-color:#e67e22; -fx-padding:10; -fx-background-radius:8;">
+            <Label text="Expense Ratio" style="-fx-text-fill:white;"/>
+            <Label fx:id="expenseRatioLabel" style="-fx-text-fill:white; -fx-font-size:14;"/>
+        </VBox>
+    </HBox>
+    
     <!-- Table -->
-    <TableView fx:id="tableView" >
-
-        <columns>
-            <TableColumn fx:id="dateCol" text="Date"/>
-            <TableColumn fx:id="categoryCol" text="Category"/>
-            <TableColumn fx:id="typeCol" text="Type"/>
-            <TableColumn fx:id="amountCol" text="Amount"/>
-            <TableColumn fx:id="descriptionCol" text="Description"/>
-            <TableColumn fx:id="actionCol" text="Action"/>
-        </columns>
-
-    </TableView>
+    <VBox alignment="CENTER">
+            <Label text="Transaction History" style="-fx-font-size:16; -fx-font-weight:bold;"/>
+    </VBox>
+    <HBox alignment="CENTER">
+        <TableView fx:id="tableView" prefHeight="200" prefWidth="750">
+            <columns>
+                <TableColumn fx:id="dateCol" text="Date" prefWidth="150"/>
+                <TableColumn fx:id="categoryCol" text="Category" prefWidth="100"/>
+                <TableColumn fx:id="typeCol" text="Type" prefWidth="100"/>
+                <TableColumn fx:id="amountCol" text="Amount" prefWidth="100"/>
+                <TableColumn fx:id="descriptionCol" text="Description" prefWidth="230"/>
+                <TableColumn fx:id="actionCol" text="Action" prefWidth="50"/>
+            </columns>
+        </TableView>
+    </HBox>
 
     <!-- chart -->
-    <VBox spacing="20" alignment="CENTER">
-        <Label text="Expense Distribution"/>
-        <PieChart fx:id="expenseChart" prefHeight="300" prefWidth="400"/>
+    <HBox spacing="30" alignment="CENTER">
+        <VBox>
+            <Label text="Expense Distribution"/>
+            <PieChart fx:id="expenseChart" prefWidth="350" prefHeight="300"/>
+        </VBox>
 
-        <Label text="Income vs Expense"/>
-        <BarChart fx:id="barChart" prefHeight="300" prefWidth="500">
-            <xAxis>
-                <CategoryAxis label="Type"/>
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="Amount"/>
-            </yAxis>
-        </BarChart>
-    </VBox>
+        <VBox>
+            <Label text="Income vs Expense"/>
+            <BarChart fx:id="barChart" prefWidth="400" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis label="Type"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Amount"/>
+                </yAxis>
+            </BarChart>
+        </VBox>
+    </HBox>
 
 </VBox>
