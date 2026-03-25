@@ -7,6 +7,7 @@ import com.maruful.model.Transaction;
 import com.maruful.recommendation.Recommendation;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -202,10 +203,10 @@ public class PrimaryController {
     double savingsRatio = engine.calculateSavingsRatio(income, expense);
     double expenseRatio = engine.calculateExpenseRatio(income, expense);
 
-    incomeLabel.setText("Income: " + income);
-    expenseLabel.setText("Expense: " + expense);
-    balanceLabel.setText("Balance: " + manager.getBalance());
-    scoreLabel.setText("Score: " + score);
+    incomeLabel.setText(String.valueOf(income));
+    expenseLabel.setText(String.valueOf(expense));
+    balanceLabel.setText(String.valueOf(manager.getBalance()));
+    scoreLabel.setText(String.valueOf(score));
     recommendationLabel.setText("Recommendation: " + advice);
     savingsRatioLabel.setText(
       String.format("Savings Ratio: %.2f%%", savingsRatio)
@@ -243,17 +244,22 @@ public class PrimaryController {
 
     barChart.getData().clear();
 
-    XYChart.Series<String, Number> series = new XYChart.Series<>();
-    series.setName("Overview");
-    series.getData().add(new XYChart.Data<>("Income", income));
-    series.getData().add(new XYChart.Data<>("Expense", expense));
-    barChart.getData().add(series);
+    XYChart.Series<String, Number> incomeSeries = new XYChart.Series<>();
+    incomeSeries.setName("Income");
+    incomeSeries.getData().add(new XYChart.Data<>("Income", income));
 
-    expenseChart.setAnimated(true);
-    barChart.setAnimated(true);
+    XYChart.Series<String, Number> expenseSeries = new XYChart.Series<>();
+    expenseSeries.setName("Expense");
+    expenseSeries.getData().add(new XYChart.Data<>("Expense", expense));
+
+    barChart.getData().add(incomeSeries);
+    barChart.getData().add(expenseSeries);
+    Platform.runLater(() -> {
+      incomeSeries.getNode().setStyle("-fx-bar-fill: #2ecc71;");
+      expenseSeries.getNode().setStyle("-fx-bar-fill: #e74c3c;");
+    });
     expenseChart.layout();
     barChart.layout();
-
     tableView.refresh();
   }
 }

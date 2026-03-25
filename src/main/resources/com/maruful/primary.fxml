@@ -7,7 +7,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.maruful.gui.PrimaryController">
 
-    <Label text="Smart Finance Manager"/>
+    <Label text="Smart Finance Manager" style="-fx-font-size:18; -fx-font-weight:bold;"/>
 
     <!-- Input Form -->
     <HBox spacing="10" alignment="CENTER">
@@ -20,34 +20,31 @@
     </HBox>
 
     <!-- Dashboard -->
-    <HBox spacing="20" alignment="CENTER">
-        <VBox style="-fx-background-color:#2ecc71; -fx-padding:15; -fx-background-radius:10;">
-            <Label text="Income" style="-fx-text-fill:white;"/>
-            <Label fx:id="incomeLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+    <HBox spacing="30" alignment="CENTER">
+        <VBox style="-fx-background-color:linear-gradient(to right, #2ecc71, #27ae60); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <Label text="Income" style="-fx-text-fill:white; -fx-font-size:14;"/>
+            <Label fx:id="incomeLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
 
-        <VBox style="-fx-background-color:#e74c3c; -fx-padding:15; -fx-background-radius:10;">
-            <Label text="Expense" style="-fx-text-fill:white;"/>
-            <Label fx:id="expenseLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        <VBox style="-fx-background-color:linear-gradient(to right, #e74c3c, #c0392b); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <Label text="Expense" style="-fx-text-fill:white; -fx-font-size:14;"/>
+            <Label fx:id="expenseLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
 
-        <VBox style="-fx-background-color:#3498db; -fx-padding:15; -fx-background-radius:10;">
-            <Label text="Balance" style="-fx-text-fill:white;"/>
-            <Label fx:id="balanceLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        <VBox style="-fx-background-color:linear-gradient(to right, #3498db, #2980b9); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <Label text="Balance" style="-fx-text-fill:white; -fx-font-size:14;"/>
+            <Label fx:id="balanceLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
 
-        <VBox style="-fx-background-color:#9b59b6; -fx-padding:15; -fx-background-radius:10;">
-            <Label text="Score" style="-fx-text-fill:white;"/>
-            <Label fx:id="scoreLabel" style="-fx-text-fill:white; -fx-font-size:16;"/>
+        <VBox style="-fx-background-color:linear-gradient(to right, #9b59b6, #8e44ad); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <Label text="Score" style="-fx-text-fill:white; -fx-font-size:14;"/>
+            <Label fx:id="scoreLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
     </HBox>
     <VBox spacing="10" alignment="CENTER">
         <Label text="Recommendation" style="-fx-font-size:16; -fx-font-weight:bold;"/>
 
-        <Label fx:id="recommendationLabel"
-               wrapText="true"
-               maxWidth="400"
-               style="-fx-background-color:#f1f2f6; -fx-padding:10; -fx-background-radius:8;"/>
+        <Label fx:id="recommendationLabel" wrapText="true" maxWidth="450" style="-fx-background-color:#f8f9fa; -fx-padding:12; -fx-background-radius:10; -fx-border-color:#ddd; -fx-border-radius:10;"/>
     </VBox>
     <HBox spacing="30" alignment="CENTER">
         <VBox style="-fx-background-color:#f39c12; -fx-padding:10; -fx-background-radius:8;">
@@ -87,7 +84,7 @@
 
         <VBox>
             <Label text="Income vs Expense"/>
-            <BarChart fx:id="barChart" prefWidth="400" prefHeight="300">
+            <BarChart fx:id="barChart" prefWidth="350" prefHeight="300">
                 <xAxis>
                     <CategoryAxis label="Type"/>
                 </xAxis>
