@@ -15,6 +15,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 public class PrimaryController {
 
@@ -43,6 +44,9 @@ public class PrimaryController {
 
   @FXML
   private Label balanceLabel;
+
+  @FXML
+  private VBox scoreCard;
 
   @FXML
   private Label scoreLabel;
@@ -206,7 +210,14 @@ public class PrimaryController {
     incomeLabel.setText(String.valueOf(income));
     expenseLabel.setText(String.valueOf(expense));
     balanceLabel.setText(String.valueOf(manager.getBalance()));
-    scoreLabel.setText(String.valueOf(score));
+    scoreLabel.setText(calculator.getScoreLabel(score) + " (" + score + ")");
+    String color;
+    if (score >= 80) color = "#2ecc71";
+    else if (score >= 60) color = "#3498db";
+    else if (score >= 40) color = "#f1c40f";
+    else color = "#e74c3c";
+    scoreCard.setStyle("-fx-background-color: " + color + ";" + "-fx-background-radius: 15;" + "-fx-padding: 18;" + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);");
+
     recommendationLabel.setText("Recommendation: " + advice);
     savingsRatioLabel.setText(
       String.format("Savings Ratio: %.2f%%", savingsRatio)

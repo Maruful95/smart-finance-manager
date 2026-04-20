@@ -36,8 +36,8 @@
             <Label fx:id="balanceLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
 
-        <VBox style="-fx-background-color:linear-gradient(to right, #9b59b6, #8e44ad); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
-            <Label text="Score" style="-fx-text-fill:white; -fx-font-size:14;"/>
+        <VBox fx:id="scoreCard" style="-fx-background-color:linear-gradient(to right, #9b59b6, #8e44ad); -fx-padding:18; -fx-background-radius:15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+            <Label text="Health: " style="-fx-text-fill:white; -fx-font-size:14;"/>
             <Label fx:id="scoreLabel" style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;"/>
         </VBox>
     </HBox>
